@@ -15,9 +15,10 @@ public class BulletManager : NetworkBehaviour
 
     public void DeleteBullet(GameObject bullet)
     {
+        if (gameObjects.Count == 0) return;
         var network = bullet.GetComponent<NetworkObject>();
-        network.Despawn();
         gameObjects.Remove(bullet);
+        network.Despawn();
     }
 
     //簡易的なシングルトン

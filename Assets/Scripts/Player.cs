@@ -162,7 +162,8 @@ public class Player : NetworkBehaviour
         bullet.direction = moveVector;
 
         var netObject = gmo.GetComponent<NetworkObject>();
-        netObject.Spawn(true);
         BulletManager.Instance.GenerateBullet(gmo);
+        netObject.Spawn(true);
+        
     }
 }
