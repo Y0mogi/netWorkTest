@@ -20,7 +20,7 @@ public class Bullet : NetworkBehaviour
         transform.Translate(direction * move * Time.fixedDeltaTime);
         count++;
 
-        if (!IsOwner) return;
+        //if (!IsOwner) return;
         if(count > 50)
         {
             BulletManager.Instance.DeleteBullet(this.gameObject);
