@@ -81,7 +81,24 @@ public class Player : NetworkBehaviour
     [System.Obsolete]
     private void FixedUpdate()
     {
-        //Debug.DrawRay(transform.position, new Vector3(m_moveInput.x, 0, m_moveInput.y),Color.red);
+        if (IsServer)
+        {
+            var moveVector = new Vector3(m_moveInput.x, 0, m_moveInput.y);
+
+            //var coefficient = (m_moveSpeed * moveVector.magnitude - m_rigidBody.velocity.magnitude) / Time.fixedDeltaTime;
+
+            m_rigidBody.AddForce((moveVector * m_moveSpeed) * Time.fixedDeltaTime);
+
+            if (isKeySpace)
+            {
+                var time = Time.time;
+                if (firedTime == 0 || firedTime + recastSecond <= time)
+                {
+                    SpawnBulletPrefab();
+                    firedTime = time;
+                }
+            }
+        }
     }
 
     //=================================================================
@@ -108,20 +125,7 @@ public class Player : NetworkBehaviour
         ////ˆÚ“®ˆ—
         //m_rigidBody.AddForce(velocity * Time.deltaTime);
 
-        if (IsServer)
-        {
-            var moveVector = new Vector3(m_moveInput.x, 0, m_moveInput.y);
 
-            //var coefficient = (m_moveSpeed * moveVector.magnitude - m_rigidBody.velocity.magnitude) / Time.fixedDeltaTime;
-
-            m_rigidBody.AddForce((moveVector * m_moveSpeed) * Time.deltaTime);
-
-            if (isKeySpace)
-            {
-                SpawnBulletPrefab();
-
-            }
-        }
     }
 
     [System.Obsolete]
