@@ -81,18 +81,17 @@ public class Player : NetworkBehaviour
     [System.Obsolete]
     private void FixedUpdate()
     {
-        if (IsServer) 
+        if (IsServer)
         {
             var moveVector = new Vector3(m_moveInput.x, 0, m_moveInput.y);
 
             //var coefficient = (m_moveSpeed * moveVector.magnitude - m_rigidBody.velocity.magnitude) / Time.fixedDeltaTime;
 
-            m_rigidBody.AddForce((moveVector * m_moveSpeed) * Time.deltaTime);
+            m_rigidBody.AddForce((moveVector * m_moveSpeed) * Time.fixedDeltaTime);
 
             if (isKeySpace)
             {
                 var time = Time.time;
-               
                 if (firedTime == 0 || firedTime + recastSecond <= time)
                 {
                     SpawnBulletPrefab();
@@ -100,8 +99,6 @@ public class Player : NetworkBehaviour
                 }
             }
         }
-
-        //Debug.DrawRay(transform.position, new Vector3(m_moveInput.x, 0, m_moveInput.y),Color.red);
     }
 
     //=================================================================
@@ -127,6 +124,8 @@ public class Player : NetworkBehaviour
         //velocity.z = m_moveSpeed * m_moveInput.normalized.y;
         ////ˆÚ“®ˆ—
         //m_rigidBody.AddForce(velocity * Time.deltaTime);
+
+
     }
 
     [System.Obsolete]
@@ -154,8 +153,6 @@ public class Player : NetworkBehaviour
 
         var moveVector = new Vector3(m_moveInput.normalized.x, 0, m_moveInput.normalized.y);
 
-
-        Debug.Log(moveVector.ToString());
         var gmo = GameObject.Instantiate(bulletPrefab, transform.position + new Vector3(0, 0.6f, 0) + (moveVector * this.bulletSpawnOffsetPosition), Quaternion.identity);
 
         var bullet = gmo.GetComponent<Bullet>();

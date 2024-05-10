@@ -89,6 +89,7 @@ public class SteamLobby : MonoBehaviour
         //“üŽºŽ¸”sŽž
         if ((EChatRoomEnterResponse)callback.m_EChatRoomEnterResponse != EChatRoomEnterResponse.k_EChatRoomEnterResponseSuccess)
         {
+            Debug.Log("Enteredfailed");
             return;
         }
 
