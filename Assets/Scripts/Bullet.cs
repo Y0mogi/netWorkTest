@@ -12,16 +12,18 @@ public class Bullet : NetworkBehaviour
     {
         ID = id;
     }
+
+    [System.Obsolete]
     private void FixedUpdate()
     {
         direction.y = 0;
         transform.Translate(direction * move * Time.fixedDeltaTime);
         count++;
 
-        if (count > 50)
+        if (!IsOwner) return;
+        if(count > 50)
         {
-            Destroy(this.gameObject);
+            BulletManager.Instance.DeleteBullet(this.gameObject);
         }
-
     }
 }
