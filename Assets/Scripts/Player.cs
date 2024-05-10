@@ -118,13 +118,8 @@ public class Player : NetworkBehaviour
 
             if (isKeySpace)
             {
-                var time = Time.time;
+                SpawnBulletPrefab();
 
-                if (firedTime == 0 || firedTime + recastSecond <= time)
-                {
-                    SpawnBulletPrefab();
-                    firedTime = time;
-                }
             }
         }
     }
@@ -154,8 +149,6 @@ public class Player : NetworkBehaviour
 
         var moveVector = new Vector3(m_moveInput.normalized.x, 0, m_moveInput.normalized.y);
 
-
-        Debug.Log(moveVector.ToString());
         var gmo = GameObject.Instantiate(bulletPrefab, transform.position + new Vector3(0, 0.6f, 0) + (moveVector * this.bulletSpawnOffsetPosition), Quaternion.identity);
 
         var bullet = gmo.GetComponent<Bullet>();
